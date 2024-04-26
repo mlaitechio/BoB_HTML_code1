@@ -1,0 +1,943 @@
+<!-- {% load static %} -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+<!--GTM Code and GA Code-->
+
+<head>
+  <title>BOB GPT</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width" />
+  <meta name="title" content="BOB GPT" />
+  <link rel="icon" href="./static/images/fav_bob.png" />
+
+  <!-- disable phone number linking (ex. free text component) -->
+
+  <!-- disable phone number linking (ex. free text component) -->
+  <!--custom meta tag-->
+
+  <meta name="theme-color" content="#ffffff">
+
+  <!--Fav icons-->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- <link href="{% static 'css/newStyle9.css' %}" defer rel="stylesheet"> -->
+  <link href="static/css/newStyle.css" defer rel="stylesheet">
+  </link>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+</head>
+
+<body class="bob-website without-banner  lang-eng">
+  <div class="main_container">
+    <!--Content Header-->
+
+    <header id="header">
+      <div class="logo">
+        <picture class="">
+          <!-- <div class="live"></div> -->
+
+          <img src="/static/images/bot_logo.png" alt="bob logo" class="bot_logo" />
+        </picture>
+        <!-- <h4>ASK ADI</h4> -->
+        <div>
+          <img class="bot_name" src="/static/images/header_bot_name.png" alt="">
+        </div>
+      </div>
+      <div class="controls">
+        <!-- <button>
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+        <button>
+          <i class="fa-solid fa-angle-down"></i>
+        </button> -->
+        <button onclick="showPopUp()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </header>
+
+    <!--Content Body-->
+
+    <div class="greet_container" id="greet_container">
+      <h5 id="greeting_msg">Good Morning!</h5>
+      <p>Welcome to Bank of Baroda, this is ADI, your virtual assistant.</p>
+    </div>
+
+
+    <div class="myInsureGPT__chat" id="myInsureGPT__chat">
+
+      <div class="bot_message_container" id="loading_container">
+        <img src="./static/images/bot_logo.png" alt="" class="bot_logo">
+        <div class="myInsureGPT__messages loading">
+          <li class="ball"></li>
+          <li class="ball"></li>
+          <li class="ball"></li>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="start_overlay" id="start_screen">
+      <div class="start_screen">
+        <div class="start_container">
+          <div class="start_con">
+            <div class="img_container">
+              <img class="bot_logo" src="/static/images/bot_logo.png" alt="">
+              <div class="ask_container">
+                <img class="bot_name" src="/static/images/bot_name.png" alt="">
+              </div>
+            </div>
+            <h4 class="heading">How can I help you today?</h4>
+            <div class="start_options">
+              <button class="start_opt" onclick='handleClick("Digital Banking")'>
+                <strong>Digital Banking</strong>
+                <p>Assist in offering details about Digital Products</p>
+              </button>
+              <a href="https://www.bankofbaroda.in/personal-banking/offers" target="_blank" class="start_opt">
+                <button class="new_page_button">
+                  <strong>Promotions & Offers</strong>
+                  <p>Latest Offers will be visible here</p>
+                </button>
+              </a>
+              <a href="https://www.bankofbaroda.in/interest-rate-and-service-charges" target="_blank" class="start_opt">
+                <button class="new_page_button">
+                  <strong>Interest Rate & Service Charges</strong>
+                  <p>Know the latest Interest Rate & Service Charges</p>
+                </button>
+              </a>
+              <button class="start_opt" onclick='handleClick("Loan Products")'>
+                <strong>Loan Products</strong>
+                <p>Assist in offering details about Loan Products</p>
+              </button>
+              <button class="start_opt" onclick='handleClick("Deposit Products")'>
+                <strong>Deposit Products</strong>
+                <p>Assist in offering details about Deposit Products</p>
+              </button>
+              <button class="start_opt" onclick='handleClick("Insurance & Investment Product")'>
+                <strong>Insurance & Investment Product</strong>
+                <p>Assist in offering details about the Insurance & Investment Product</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="myInsureGPT__footer" id="myInsureGPT__footer">
+      <div class="myInsureGPT__inputContainer">
+        <button class="options_button" id="options_button" onclick="handleStartModal()">
+          <!-- <i class="fa-solid fa-qrcode"></i> -->
+          <i class="fa-solid fa-grip"></i>
+          <!-- <i class="fa-solid fa-cubes-stacked"></i> -->
+          <!-- <i class="fa-solid fa-cubes"></i> -->
+        </button>
+        <input class="myInsureGPT__input" id="promptAndResponse_Prompt" name="promptAndResponse.Prompt"
+          placeholder="Kindly type your query" type="text" value="" />
+        <input type="hidden" id="hdnds" value="65517cf78ef54b5ca765754e97ff0224" />
+      </div>
+      <button class="myInsureGPT__newMessageSendButton" title="Send" id="sendButton" onclick="sendMessage()">
+        <img src="/static/images/send.png" alt="" class="myInsureGPT__sendIcon">
+
+        <!-- <i class="fa-solid fa-paper-plane"></i> -->
+      </button>
+      <button class="stopButton_container myInsureGPT__newMessageSendButton" id="stopButton" title="Stop">
+        <i class="fa-solid fa-pause"></i>
+      </button>
+    </div>
+
+    <!-- Content Footer -->
+
+    <p class="genAI_msg">ADI is genAI powered virtual assistant , help you in providing our product and service related information though it may sometimes provide inaccurate responses.</p>
+    <!-- {% csrf_token %} -->
+    <div id="myModal" class="modal">
+      <form id="feedbackForm">
+        <div class="modal-content">
+          <button class="close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div>
+            <!-- <div class="modal_header">
+              <p>It was great seeing you today!!!</p>
+            </div> -->
+            <!-- 
+            <div class="modal_icon_container" >
+              <i class="fa-solid fa-hand-holding-heart"></i>
+            </div> -->
+            <div class="header_container">
+              <div class="block block_1">
+                <!-- <p class="header">On exiting, all chat history will be cleared</p> -->
+                <div class="modal_icon_container">
+                  <i class="fa-solid fa-ranking-star"></i>
+                </div>
+                <p class="header_2">How would you rate your overall experience?</p>
+                <div class="star_container" id="experience">
+                </div>
+                <!-- <p class="star_state" id="star_state_1">EXTREMELY SATISFIED</p> -->
+              </div>
+              <div class="block block_1">
+                <div class="modal_icon_container">
+                  <i class="fa-solid fa-hand-sparkles"></i>
+                </div>
+                <p class="header_2">How likely you would recommend Bank of Baroda to a family & friend?</p>
+                <!-- <p class="desc">On a scale of 0 to 10, with 10 being “Very Likely” and 0 being “Very Unlikely”</p> -->
+                <div class="star_container" id="likely">
+
+                </div>
+                <!-- <p class="star_state" id="star_state_1">VERY LIKELY</p> -->
+              </div>
+              <div class="block">
+                <div class="modal_icon_container">
+                  <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <p class="header_2">How much effort did it take to resolve your issue?</p>
+                <div class="star_container" id="effort">
+
+                </div>
+                <!-- <p class="star_state" id="star_state_1">LEAST EFFORT</p> -->
+              </div>
+              <div class="feedback_comment">
+                <textarea name="feedback" id="feedback" cols="50" rows="5"
+                  placeholder="Feedbacks or Comments"></textarea>
+              </div>
+              <div class="button_container">
+                <button type="submit" onclick="submit_feedback_button()">SUBMIT</button>
+                <button id="close_modal" type="reset">
+                  CLOSE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="support_modal" class="support_modal">
+      <div class="modal-content">
+        <button id="support_modal_close" class="close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div>
+          <div class="header_container">
+            <div class="block">
+
+              <p class="header_2">
+                Oops! Seems like you are not happy with the overall experience.
+                You can choose below options to connect to our customer support team
+              </p>
+              <div class="star_container" id="experience">
+              </div>
+            </div>
+            <div class="button_container">
+              <a href="https://bankofbaroda.in/chat/bob/countrywebsite/india/uat-buid2/livechat.html" target="_blank">
+                <button>
+                  <i class="fa-solid fa-comments"></i>
+                  Live Chat
+                </button>
+              </a>
+              <a href="https://bankofbaroda.in/chat/bob/countrywebsite/india/videochat/video_calling_setup_06022023.html"
+                target="_blank">
+                <button>
+                  <i class="fa-solid fa-video"></i>
+                  Video Call
+                </button>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="myModal" class="modal">
+      <form id="feedbackForm">
+        <div class="modal-content">
+          <button class="close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div>
+            <div class="modal_header">
+              <p>It was great seeing you today!!!</p>
+            </div>
+            <div class="header_container">
+              <div class="block block_1">
+                <p class="header">On exiting, all chat history will be cleared</p>
+                <p class="header_2">How would you rate your overall experience?</p>
+                <div class="star_container" id="experience">
+                </div>
+                <p class="star_state" id="star_state_1">EXTREMELY SATISFIED</p>
+              </div>
+              <div class="block block_1">
+                <p class="header_2">How likely you would recommend Bank of Baroda to a family & friend?</p>
+                <p class="desc">On a scale of 0 to 10, with 10 being “Very Likely” and 0 being “Very Unlikely”</p>
+                <div class="star_container" id="likely">
+
+                </div>
+                <p class="star_state" id="star_state_1">VERY LIKELY</p>
+              </div>
+              <div class="block">
+                <p class="header_2">How much effort did it take to resolve your issue?</p>
+                <div class="star_container" id="effort">
+
+                </div>
+                <p class="star_state" id="star_state_1">LEAST EFFORT</p>
+              </div>
+              <div class="button_container">
+                <button type="submit">SUBMIT</button>
+                <button>
+                  CLOSE
+                </button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div> -->
+
+  </div>
+
+  <script>
+    //console.log('wss://' + window.location.host + '/wss/sc/');
+    //var ws = new WebSocket('wss://' + window.location.host + '/wss/sc/');
+    var ws = new WebSocket('ws://' + window.location.host + '/wss/sc/');
+    document.getElementById('stopButton').style.display = 'none';
+    const quick_questions_button = document.querySelectorAll('.bg_light');
+
+    const msg_loading = document.getElementById("loading_container")
+    msg_loading.style.display = "none"
+
+    let stopGenerating = false; // Flag to control data processing
+    let autoScroll = true;
+    let isStartModalVisible = true
+
+    function handleStartModal() {
+      const startModal = document.getElementById("start_screen")
+      const chatScreen = document.getElementById("myInsureGPT__chat")
+      const header = document.getElementById("header")
+
+      if (isStartModalVisible) {
+        startModal.style.display = "none"
+        chatScreen.style.display = "flex"
+        header.style.display = "flex"
+      } else {
+        startModal.style.display = "flex"
+        chatScreen.style.display = "none"
+        header.style.display = "none"
+      }
+      isStartModalVisible = !isStartModalVisible
+    }
+
+    function handleClick(val) {
+      document.getElementById("promptAndResponse_Prompt").value = val
+      sendMessage()
+    }
+
+
+    function getCurrentTime() {
+      // Get current time
+      const currentTime = new Date();
+      let hours = currentTime.getHours();
+      const minutes = currentTime.getMinutes();
+      const amPm = hours >= 12 ? 'PM' : 'AM';
+
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+
+      const formattedHours = hours < 10 ? "0" + hours : hours
+      const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+      const formattedTime = formattedHours + ':' + formattedMinutes + ' ' + amPm;
+
+      return formattedTime;
+    }
+
+    ws.onopen = function () {
+      console.log("Web Socket Connection opened..");
+    };
+
+    const dataContainer = document.getElementById('myInsureGPT__chat');
+    dataContainer.addEventListener('scroll', () => {
+      const isScrolledToBottom = dataContainer.scrollHeight <= (dataContainer.clientHeight + dataContainer.scrollTop + 2)
+      if (isScrolledToBottom) {
+        autoScroll = true;
+      } else {
+        autoScroll = false;
+      }
+    });
+
+    function getChunk(eventData) {
+      // Implement your logic to extract the chunk from the event data
+      // For example, if the event data is JSON-encoded, you can parse it and access the desired property
+      //var parsedData = JSON.parse(eventData);
+      var chunk = eventData;
+      return chunk;
+    }
+
+    function getWebsiteLinks(text) {
+      const results = [];
+      let startIndex = 0;
+      let extraBraces = 0;
+      let extraSq = false;
+      let startBlob = [];
+      let endBlob = [];
+
+      while (startIndex < text.length) {
+        if (text[startIndex] === "[") {
+          startBlob.push(startIndex);
+          extraSq = true;
+        }
+        if (text[startIndex] === "]") {
+          extraSq = false;
+        }
+
+        if (!extraSq) {
+          if (text[startIndex] === "(") {
+            extraBraces += 1;
+          }
+
+          if (text[startIndex] === ")") {
+            extraBraces -= 1;
+            if (!extraBraces) {
+              endBlob.push(startIndex + 1);
+            }
+          }
+        }
+
+        startIndex = startIndex + 1;
+      }
+
+      startBlob.forEach((element, index) => {
+        if (endBlob[index]) results.push(text.slice(element, endBlob[index]));
+      });
+
+      return results;
+    }
+
+
+    const getDomainWithUrl = (str) => {
+      const orgStr = str;
+
+      let startIndex = 0;
+      let domainStartPoint = 0;
+      let domainEndPoint = 0;
+      let urlStartPoint = 0;
+
+      while (startIndex < str.length) {
+        if (str[startIndex] === "[") domainStartPoint = startIndex + 1;
+        if (str[startIndex] === "]") {
+          domainEndPoint = startIndex;
+          urlStartPoint = startIndex + 2;
+        }
+        startIndex += 1;
+      }
+
+      const domainStr = str.slice(domainStartPoint, domainEndPoint);
+      const urlStr = str.slice(urlStartPoint, -1);
+      return [orgStr, domainStr, urlStr];
+    };
+
+
+    ws.onmessage = function (event) {
+      document.getElementById("myInsureGPT__footer").style.display = "flex";
+      if (!stopGenerating) {
+        // console.log("Message Received from Server:", event.data);
+        var data = JSON.parse(event.data);
+        if (data.error) {
+          console.log("Error Received from Server:", data["error"]);
+          var answerBox = document.getElementById("myInsureGPT__chat");
+          if (answerBox) {
+            // Find the last message container
+            var lastMessageContainer = answerBox.lastElementChild;
+
+            // Find the existing <p> tag within the last message container
+            var existingParagraph = lastMessageContainer.querySelector('.myInsureGPT__receivedMessages p');
+
+            if (existingParagraph) {
+              window.location.reload();
+              errorMsg = data["error"]
+              existingParagraph.innerText = errorMsg + " Try to Refresh The Page";
+              // errorDiv.style.display = 'block';
+            }
+          }
+        } else {
+          // console.log("Message Received from Server:", data["chunk"]);
+          // Handle the regular data on the frontend
+          var chunk = getChunk(data["chunk"]);
+          displayChunk(chunk);
+        }
+      }
+    };
+
+    document.getElementById("stopButton").addEventListener("click", function () {
+
+      let buttonValue = document.getElementById("stopButton");
+      let p = buttonValue.value;
+      msg_loading.style.display = "none"
+      ws.send("stop generating")
+
+      stopGenerating = true; // Set the flag to stop data processing
+      // document.getElementById('load').style.display = 'none';
+      document.getElementById('sendButton').disabled = true;
+      document.getElementById('stopButton').style.display = 'none';
+      document.getElementById("options_button").style.display = "block"
+      document.getElementById('sendButton').style.display = 'flex';
+
+      //document.getElementById('button').style.display = 'inline-block';
+      setTimeout(() => {
+        document.getElementById('sendButton').disabled = false;
+        quick_questions_button.forEach((element) => element.disabled = false)
+        document.getElementById("promptAndResponse_Prompt").disabled = false;
+      }, 10000);
+    });
+
+    var lastChatBox = null;
+    let lastMsgBox = null
+
+    function submitQuestion(inputMessage) {
+      var questionText = inputMessage;
+
+      msg_loading.style.display = "flex"
+
+      //var resultText = getResult();
+      // console.log("Question", questionText);
+      // Create a new chat box
+      const botMsg = document.createElement("div");
+      botMsg.className = "bot_message_container"
+      const botLogo = document.createElement("img");
+      botLogo.src = "./static/images/bot_logo.png"
+      botLogo.className = "bot_logo"
+
+      var chatContainer = document.createElement("div");
+      var chatBox = document.createElement("div");
+      var timeCont = document.createElement("p");
+      timeCont.className = "time"
+      timeCont.innerText = getCurrentTime();
+      chatContainer.className = "myInsureGPT__sentMessages_container"
+      chatBox.className = "myInsureGPT__messages myInsureGPT__sentMessages";
+      chatBox.innerHTML += `<p>${questionText}</p>`;
+      var chatBox2 = document.createElement("div");
+      chatBox2.className = "myInsureGPT__messages myInsureGPT__receivedMessages";
+      chatBox2.innerHTML += `<p></p>`;
+
+      // Insert the new chat box after the last chat box
+      var chatAnsDiv = document.getElementById("myInsureGPT__chat");
+
+      chatContainer.appendChild(chatBox)
+      chatContainer.appendChild(timeCont)
+
+      botMsg.appendChild(botLogo)
+      botMsg.appendChild(chatBox2)
+      botMsg.style.display = "none"
+
+      chatAnsDiv.appendChild(chatContainer)
+      chatAnsDiv.appendChild(botMsg)
+      lastChatBox = chatBox;
+      lastMsgBox = botMsg
+      // Clear the question input
+      clearQuestion();
+      if (autoScroll) {
+        chatBox.scrollIntoView({ behavior: 'smooth' });
+        dataContainer.scrollTop = dataContainer.scrollHeight;
+        // dataContainer.clientHeight = dataContainer.scrollHeight;
+      }
+    }
+
+    function displayChunk(chunk) {
+      var accumulatedChunks = '';
+
+      if (chunk !== "ALL_CHUNKS_SENT") {
+        document.getElementById("promptAndResponse_Prompt").disabled = true
+        // Assuming lastChatBox is defined somewhere in your code
+        var answerBox = document.getElementById("myInsureGPT__chat");
+
+        if (answerBox) {
+          // Find the last message container
+          var lastMessageContainer = answerBox.lastElementChild;
+          // var lastMessageContainer = answerBox.firstElementChild;
+
+          // Find the existing <p> tag within the last message container
+          var existingParagraph = lastMessageContainer.querySelector('.myInsureGPT__receivedMessages p');
+          lastMsgBox.style.display = "flex"
+          msg_loading.style.display = "none"
+          if (existingParagraph) {
+            // Append the new chunk to the existing <p> tag content
+            existingParagraph.innerHTML += chunk;
+            if (autoScroll) {
+              answerBox.scrollIntoView({ behavior: 'smooth' });
+              dataContainer.scrollTop = dataContainer.scrollHeight;
+              // dataContainer.clientHeight = dataContainer.scrollHeight;
+            }
+          } else {
+            // If no <p> tag exists, create a new one
+            var newParagraph = document.createElement('p');
+            newParagraph.innerHTML = chunk;
+
+            // Create a new response element with the new <p> tag
+            var newResponse = document.createElement('div');
+            newResponse.className = 'myInsureGPT__messages myInsureGPT__receivedMessages';
+            newResponse.appendChild(newParagraph);
+
+            // Insert the new response before the last message container
+            answerBox.insertBefore(newResponse, lastMessageContainer.nextSibling);
+            if (autoScroll) {
+              answerBox.scrollIntoView({ behavior: 'smooth' });
+              dataContainer.scrollTop = dataContainer.scrollHeight;
+              // dataContainer.clientHeight = dataContainer.scrollHeight;
+            }
+          }
+        }
+      } else {
+
+        var answerBox = document.getElementById("myInsureGPT__chat");
+        if (answerBox) {
+          // Find the last message container
+          // var lastMessageContainer = answerBox.firstElementChild;
+          var lastMessageContainer = answerBox.lastElementChild;
+
+          // Find the existing <p> tag within the last message container
+          var existingParagraph = lastMessageContainer.querySelector('.myInsureGPT__receivedMessages p');
+
+          var existingContent = existingParagraph.innerHTML;
+          const boldRegex = /\*\*(.*?)\*\*/g;
+          const boldMatches = existingContent.match(boldRegex);
+
+          if (boldMatches) {
+            for (var i = 0; i < boldMatches.length; i++) {
+              var boldMatch = boldMatches[i];
+              const textInsideBold = boldMatch.replace(/\*\*/g, ""); // Remove the **
+              const boldReplacement = `<strong>${textInsideBold}</strong>`;
+              existingContent = existingContent.replace(boldMatch, boldReplacement);
+            }
+          }
+          // const formattedLinkRegex = /\[([^[\]]*)\]\(([^)]*)\)/g;
+          // const matches = existingContent.match(formattedLinkRegex);
+          const matches = getWebsiteLinks(existingContent)
+          console.log("Mached  " + matches)
+          let result = existingContent;
+          if (matches) {
+            matches.forEach((match) => {
+              let [_, text, link] = getDomainWithUrl(match);
+              let replacement;
+
+              if (
+                link.endsWith(".png") ||
+                link.endsWith(".jpg") ||
+                link.endsWith(".jpeg")
+              ) {
+                replacement = `<img src="${link}" style="width: 250px; height: 150px; margin: 40px 52px 20px 20px;">`;
+              } else {
+                replacement = `<a href="${link}" target="_blank">${text}</a>`;
+              }
+              existingContent = existingContent.replace(match, replacement);
+              existingParagraph.innerHTML = existingContent;
+            });
+
+            // for (var i = 0; i < matches.length; i++) {
+            //   var match = matches[i];
+            //   console.log(match);
+            //   // const regex = /\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/;
+            //   // const matche2 = match.match(regex);
+            //   const matche2 = getDomainWithUrl(match);
+            //   if (matche2) {
+            //     const text = matche2[1];
+            //     const link = matche2[2];
+            //     console.log(link);
+            //     let replacement;
+
+            //     if (link.endsWith('.png') || link.endsWith('.jpg') || link.endsWith('.jpeg')) {
+            //       replacement = `<img src="${link}" style="width: 250px; height: 150px; margin: 40px 52px 20px 20px;">`;
+            //     } else {
+
+            //       replacement = `<a href="${link}" target="_blank">${text}</a>`;
+            //     }
+            //     existingContent = existingContent.replace(match, replacement);
+            //   }
+            //   existingParagraph.innerHTML = existingContent;
+
+            // }
+
+          }
+
+          // Find URLs that are not already in <a> tags
+
+          // const urlPattern = /<a\s+[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/g;
+          // const urlPattern = /<img[^>]+>|<a\s+[^>]*href=[\'"]?(https?:\/\/[^\'" >]+)|https?:\/\/[^\'" >]+/g;
+          const urlPattern = /<a[^>]*>.*?<\/a>|<img[^>]*>.*?<\/img>|\b(https?:\/\/[^\s<>\)]+(?![^<>]*>|[^"]*?<\/a>|[^"]*?<\/img>))\b/g;
+
+          const unmatchedUrls = existingContent.match(urlPattern);
+
+          console.log("unmatched:  ", unmatchedUrls)
+
+          if (unmatchedUrls) {
+            for (const link of unmatchedUrls) {
+              if (!link.startsWith('<a') && !link.startsWith('<img')) {
+                // console.log("URL:", link)
+                const hyperlink = `<a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>`;
+                existingContent = existingContent.replace(link, hyperlink);
+              }
+              existingParagraph.innerHTML = existingContent;
+            }
+          }
+          const pipeTableRegex = /\|.*?\|/g;
+
+          //const pipeTableRegex = /\s*\|([\s\S]*?)\|/g;
+          const pipeTableMatches = existingContent.match(pipeTableRegex);
+
+          if (pipeTableMatches) {
+
+            // Replace each pipe table with the dynamic HTML table
+            //const pipeTable = existingContent.match(/\|([^]*?)\|/g);
+            //console.log("All Table",pipeTable)
+
+            const htmlTable = convertPipeTableToHTML(existingContent);
+            // Convert the pipe table to an HTML table
+
+            //const dynamicTableHTML = createDynamicTable(existingContent);
+
+            // Replace the current pipe table with the dynamic HTML table
+            //pipeTableContainer.innerHTML = `<p>${otherDetails}</p>${htmlTable}`;
+            // Update the 'result' div with the modified content
+            existingParagraph.innerHTML = htmlTable;
+          }
+          if (autoScroll) {
+            answerBox.scrollIntoView({ behavior: 'smooth' });
+            dataContainer.scrollTop = dataContainer.scrollHeight;
+            // dataContainer.clientHeight = dataContainer.scrollHeight;
+          }
+          document.getElementById('stopButton').style.display = 'none';
+          document.getElementById("options_button").style.display = "block"
+          document.getElementById('sendButton').style.display = 'flex';
+          document.getElementById("promptAndResponse_Prompt").disabled = false;
+          quick_questions_button.forEach((element) => element.disabled = false)
+
+        }
+
+      }
+
+    }
+
+    function convertPipeTableToHTML(pipeTableStr) {
+
+      const tableRows = pipeTableStr.split('\n').filter(row => row.trim() !== '');
+      console.log(tableRows)
+      let p = '<p>'
+      let htmlTable = '<table>';
+      for (let i = 0; i < tableRows.length; i++) {
+        const table1 = tableRows[i].match(/\|(.*?)\|/);
+        const extra = tableRows[i].match(/\|*[-]\|/);
+        if (extra) {
+          tableRows[i] = " "
+        }
+        if (table1) {
+          const columns = tableRows[i].split('|').map(column => column.trim());
+          if (i === 0) {
+            // Header row
+            htmlTable += '<tr>';
+            for (const header of columns) {
+              htmlTable += `<td>${header}</td>`;
+            }
+            htmlTable += '</tr>';
+          } else {
+            // Data rows
+            htmlTable += '<tr>';
+            for (const data of columns) {
+              htmlTable += `<td>${data}</td>`;
+            }
+            htmlTable += '</tr>';
+          }
+        } else {
+          p += tableRows[i];
+          //console.log(data)
+          p += `</p>`
+        }
+      }
+      htmlTable += '</table>';
+
+
+      return p + htmlTable;
+    }
+
+    function handleClick(val) {
+      document.getElementById("promptAndResponse_Prompt").value = val
+      sendMessage()
+    }
+
+    // Function to clear the question input field
+    function clearQuestion() {
+      document.getElementById("promptAndResponse_Prompt").value = "";
+    }
+
+    document.getElementById("promptAndResponse_Prompt").addEventListener("keypress", function (event) {
+
+      // Check if the Enter key is pressed (Enter key has keyCode 13)
+      if (event.keyCode === 13) {
+        stopGenerating = false;
+        event.preventDefault(); // Prevent form submission (to avoid page refresh)
+        sendMessage(); // Call the sendMessage function to handle submission
+      }
+    });
+
+    function isValidInput(text) {
+      const validWordPattern = /^(?!.*([a-zA-Z])\1\1)[a-zA-Z.,`!-@#\\~?(){}0123456789]+$/;
+      return validWordPattern.test(text);
+    }
+
+    function sendMessage() {
+      stopGenerating = false;
+
+      var inputMessage = document.getElementById("promptAndResponse_Prompt").value;
+      if (inputMessage.length === 0) return;
+      const msg = inputMessage.toLowerCase().replace(/\s/g, "");
+      // if (!isValidInput(msg)) return;
+      isStartModalVisible = false;
+      document.getElementById("start_screen").style.display = "none"
+      document.getElementById("myInsureGPT__chat").style.display = "flex"
+      document.getElementById("header").style.display = "flex"
+      // document.getElementById("options_button").style.display = "block"
+      document.getElementById("options_button").style.display = "none"
+      submitQuestion(inputMessage)
+      document.getElementById('stopButton').style.display = 'flex';
+      document.getElementById('sendButton').style.display = 'none';
+      quick_questions_button.forEach((element) => element.disabled = true)
+      //document.getElementById('myDiv').style.display = 'none';
+      ws.send(inputMessage);
+      dataContainer.scrollTop = dataContainer.scrollHeight;
+    };
+
+    const modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    const ModalCloseBtn = document.getElementsByClassName("close")[0];
+
+    function showPopUp() {
+      modal.style.display = "block";
+    }
+
+
+    const starContainer = document.getElementById("experience")
+    const likelyContainer = document.getElementById("likely")
+    const effortContainer = document.getElementById("effort")
+    let max_star = 3
+
+    const solidStarComponent = '<i class="fa-solid fa-star"></i>'
+    const emptyStarComponent = '<i class="fa-regular fa-star"></i>'
+
+    for (let i = 0; i < max_star; i++) {
+      starContainer.innerHTML += solidStarComponent;
+    }
+    for (let i = 0; i < 5 - max_star; i++) {
+      starContainer.innerHTML += emptyStarComponent;
+    }
+
+    for (let i = 0; i < max_star; i++) {
+      likelyContainer.innerHTML += solidStarComponent;
+    }
+    for (let i = 0; i < 5 - max_star; i++) {
+      likelyContainer.innerHTML += emptyStarComponent;
+    }
+
+    for (let i = 0; i < max_star; i++) {
+      effortContainer.innerHTML += solidStarComponent;
+    }
+    for (let i = 0; i < 5 - max_star; i++) {
+      effortContainer.innerHTML += emptyStarComponent;
+    }
+
+
+    // When the user clicks on <span> (x), close the modal
+    ModalCloseBtn.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    const support_modal_close = document.getElementById("support_modal_close")
+    const support_modal = document.getElementById("support_modal")
+    support_modal_close.onclick = function () {
+      support_modal.style.display = "none";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    const modal_close_btn = document.getElementById("close_modal")
+    modal_close_btn.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    function submit_feedback_button() {
+      const support_modal = document.getElementById("support_modal")
+      support_modal.style.display = "flex"
+    }
+
+    document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent default form submission
+      // console.log("called");
+      const experienceRating = calculateRating('experience'); // Implement this function to calculate the rating
+      const recommendRating = calculateRating('likely');
+      const effortRating = calculateRating('effort');
+
+
+
+      const formData = {
+        experience: experienceRating,
+        recommend: recommendRating,
+        effort: effortRating
+        // Add other form fields as needed
+      };
+      // const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      // Send form data to Django backend
+      // fetch('submit_feedback/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'X-CSRFToken': csrfToken
+      //   },
+      //   body: JSON.stringify(formData)
+      // })
+
+      //   .then(response => {
+      //     if (response.ok) {
+      //       // Handle success
+      //       console.log(formData) // Close modal or perform any other action
+      //     } else {
+      //       // Handle error
+      //       console.error('Failed to submit feedback');
+      //     }
+      //   })
+      //   .catch(error => {
+      //     console.error('Error submitting feedback:', error);
+      //   });
+    });
+
+    function calculateRating(containerId) {
+      // Implement your logic to calculate the rating from the star ratings
+      // For example, count the number of filled stars
+      const container = document.getElementById(containerId);
+      const filledStars = container.querySelectorAll('.fa-solid.fa-star').length;
+      const totalStars = container.querySelectorAll('.fa-star').length;
+      const rating = filledStars / totalStars;
+      return rating;
+    }
+
+  </script>
+</body>
+
+</html>
