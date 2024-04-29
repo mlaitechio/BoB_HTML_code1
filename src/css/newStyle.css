@@ -169,12 +169,12 @@ a:hover {
   /* text-decoration: underline; */
 }
 
-a:not([href]):not([class]) {
+a:not([href]):not([className]) {
   color: inherit;
   text-decoration: none;
 }
 
-a:not([href]):not([class]):hover {
+a:not([href]):not([className]):hover {
   color: inherit;
   text-decoration: none;
 }
@@ -1103,7 +1103,7 @@ header .controls > *:nth-child(3) {
     padding: 10px;
   }
 
-  .myInsureGPT__footer{
+  .myInsureGPT__footer {
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 10px;
