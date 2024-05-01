@@ -7,21 +7,6 @@ import images from "./images/index.js";
 import { Header, FeedbackModal, SupportModal, LoadingMsg, ChatsContainer, StartingPage } from "./components"
 import { formatResponse } from "./utils/formatResponse.js";
 
-const answerRsponse = 'Bank of Baroda offers a diverse range of loan products that are designed to meet various financial requirements. Here are a few that might be considered as being among the best:\n' +
-  '\n' +
-  '1. **Retail Gold Loan**: A secure way to meet unexpected expenses by simply pledging your gold ornaments or coins. Interest rates and processing times are quite appealing on these loans.\n' +
-  'Read More here: [Bank of Baroda Gold Loan](https://www.bankofbaroda.in/personal-banking/loans/gold-loan/retail-gold-loan)\n' +
-  '\n' +
-  '2. **Baroda Home Loan Advantage**: This home loan provides numerous benefits including lower effective interest, optional life insurance, and the flexibility of linking your savings account. Plus, you get the benefit of an auto recovery EMI system which makes managing your loan easier.\n' +
-  '   \n' +
-  '3. **Baroda Two Wheeler Loan**: Through an easy application process, you can finance a brand new two-wheeler with affordable monthly instalments and minimal processing charges. \n' +
-  'Read More here: [Bank of Baroda Two Wheelers Loan](https://www.bankofbaroda.in/personal-banking/loans/vehicle-loan/baroda-two-wheeler-loan)\n' +
-  '\n' +
-  'Also, to meet the banking needs of Non-Residential Indians, we offer versatile NRI Banking products and services. \n' +
-  '\n' +
-  'Remember, each loan product has its unique benefits and could be the \'best\' based on your specific needs. I recommend checking each one in detail at our official website [Bank of Baroda](https://www.bankofbaroda.in/).'
-
-
 function App() {
   const [msgLoadingVisible, setMsgLoadingVisible] = useState(false);
   const [promptValue, setPromptValue] = useState("");
@@ -51,7 +36,6 @@ function App() {
   };
 
   const getApiResponse = async (value) => {
-    console.log(value);
     try {
       let reqPackage = JSON.stringify({
         "question": value
@@ -59,7 +43,8 @@ function App() {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://5248-122-170-103-221.ngrok-free.app/chat/',
+        url: 'https://b49b-122-170-103-221.ngrok-free.app/chat/',
+        // url: '/chat/',
         headers: {
           "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE0ODg1NzcyLCJpYXQiOjE3MTQ0NTM3NzIsImp0aSI6ImQ2NzkwODVhZjQ2YzQzNzNhZGYwMmM2ZTM5YTFkYjc0IiwidXNlcl9pZCI6MX0.rKvwRS3NvaI-dgUcSi3b-vWVSoC6-c5walKzGlKUnXA',
           'Content-Type': 'application/json'
@@ -68,7 +53,8 @@ function App() {
       };
 
       const { data } = await axios.request(config)
-      const formattedData = formatResponse(data)
+      const ans = data.response[1][1][0][3][1][0][1]
+      const formattedData = formatResponse(ans)
       const newMsg = {
         id: uuidv4(),
         message: formattedData,
@@ -78,11 +64,13 @@ function App() {
       setChats(prev => [...prev, newMsg])
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSending(true);
+      setMsgLoadingVisible(false)
     }
   }
 
   const sendMessage = async (value) => {
-
     if (promptValue.length) {
       value = promptValue
     }
@@ -96,11 +84,12 @@ function App() {
       type: messageType.question
     }
     setChats(prev => [...prev, newInputMsg])
-    await getApiResponse(value)
     setPromptValue("");
     setIsSending(false);
     setMsgLoadingVisible(true)
     setIsStartModalVisible(false);
+    await getApiResponse(value)
+
   };
 
   const handleStartModal = () => {

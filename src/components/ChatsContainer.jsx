@@ -33,7 +33,9 @@ const ChatsContainer = ({ chat }) => {
         >
           <img src={images.bot_logo} alt="" className="bot_logo" />
           <div className="myInsureGPT__messages myInsureGPT__receivedMessages">
-            <p>{chat.message}</p>
+            <p>
+              <div dangerouslySetInnerHTML={{ __html: chat.message }} />
+            </p>
           </div>
         </div>
       )}

@@ -57,7 +57,7 @@ const getDomainWithUrl = (str) => {
 
   const domainStr = str.slice(domainStartPoint, domainEndPoint);
   const urlStr = str.slice(urlStartPoint, -1);
-  return [orgStr, domainStr, urlStr];
+  return [domainStr, urlStr];
 };
 
 const convertPipeTableToHTML = (pipeTableStr) => {
@@ -115,9 +115,11 @@ export function formatResponse(val) {
 
   const matches = getWebsiteLinks(content);
 
+  console.log({ matches });
+
   if (matches) {
     matches.forEach((match) => {
-      let [, text, link] = getDomainWithUrl(match);
+      let [text, link] = getDomainWithUrl(match);
       let replacement;
 
       if (
@@ -138,7 +140,7 @@ export function formatResponse(val) {
 
   const unmatchedUrls = content.match(urlPattern);
 
-  // console.log(unmatchedUrls);
+  console.log({ unmatchedUrls });
 
   if (unmatchedUrls) {
     for (const link of unmatchedUrls) {
@@ -161,12 +163,3 @@ export function formatResponse(val) {
 
   return content;
 }
-
-
-// const ans = data.response.slice(2);
-
-// let answer = ""
-
-// ans.forEach(element => {
-//   if(element[1][1][0][0][1][0][1]) answer += element[1][1][0][0][1][0][1]
-// });
