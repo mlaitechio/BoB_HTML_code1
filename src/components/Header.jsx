@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 
 const Header = ({ showPopUp }) => {
   return (
-    <header
-      id="header"
-      style={{ display: "flex" }}
-    >
+    <header>
       <div className="logo">
         <picture className="">
           <img src={images.bot_logo} alt="bob logo" className="bot_logo" />
         </picture>
         <div>
-          <img className="bot_name" src={images.header_bot_name} alt="" />
+          <img className="bot_name" src={images.header_bot_name} alt="bot_name" />
         </div>
       </div>
       <div className="controls">

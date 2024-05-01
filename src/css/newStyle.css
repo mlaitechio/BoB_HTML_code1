@@ -475,7 +475,7 @@ header {
     linear-gradient(to bottom, transparent 30%, rgb(255, 255, 255) 50%);
   background-size: 5px 5px;
   padding: 5px 15px;
-  display: none;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -984,7 +984,7 @@ header .controls > *:nth-child(3) {
 }
 
 .myInsureGPT__footer .myInsureGPT__inputContainer .options_button {
-  display: none;
+  display: block;
   position: absolute;
   right: 0;
   top: -3rem;

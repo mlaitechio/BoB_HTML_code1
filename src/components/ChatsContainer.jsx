@@ -46,7 +46,7 @@ ChatsContainer.propTypes = {
   chat: PropTypes.shape({
     id: PropTypes.string,
     message: PropTypes.string,
-    time: PropTypes.string,
+    time: PropTypes.object,
     type: PropTypes.string,
   })
 }
