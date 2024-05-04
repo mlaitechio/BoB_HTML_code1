@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { messageType } from '../../constant';
 import images from "../images"
+import Typewriter from "typewriter-effect";
 
-const ChatsContainer = ({ chat }) => {
+const ChatsContainer = ({ chat, chatsArr, handleIsRenderChange }) => {
 
   function getCurrentTime(currentTime) {
     let hours = currentTime.getHours();
@@ -13,6 +14,14 @@ const ChatsContainer = ({ chat }) => {
     const formattedHours = hours < 10 ? "0" + hours : hours;
     const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
     return formattedHours + ":" + formattedMinutes + " " + amPm;
+  }
+
+  const handleRenderChange = () => {
+    const filteredChat = chatsArr.filter(element => element.id !== chat.id)
+    const updatedChat = {
+      ...chat, isRendering: false
+    }
+    handleIsRenderChange([...filteredChat, updatedChat])
   }
 
   return (
@@ -34,7 +43,25 @@ const ChatsContainer = ({ chat }) => {
           <img src={images.bot_logo} alt="" className="bot_logo" />
           <div className="myInsureGPT__messages myInsureGPT__receivedMessages">
             <p>
-              <div dangerouslySetInnerHTML={{ __html: chat.message }} />
+              {chat.isRendering ? (
+                <Typewriter
+                  options={{
+                    delay: 5,
+                    cursor: ""
+                  }}
+                  onInit={(typewriter) => {
+                    typewriter
+                      .typeString(chat.message)
+                      .callFunction(() => {
+                        handleRenderChange()
+                      })
+                      .start()
+                  }}
+                />
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: chat.message }} />
+              )}
+
             </p>
           </div>
         </div>
@@ -50,7 +77,10 @@ ChatsContainer.propTypes = {
     message: PropTypes.string,
     time: PropTypes.object,
     type: PropTypes.string,
-  })
+    isRendering: PropTypes.bool,
+  }),
+  handleIsRenderChange: PropTypes.func,
+  chatsArr: PropTypes.shape([])
 }
 
 export default ChatsContainer
