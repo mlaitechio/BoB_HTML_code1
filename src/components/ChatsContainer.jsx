@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types';
 import { messageType } from '../../constant';
 import images from "../images"
-import Typewriter from "typewriter-effect";
+// import Typewriter from "typewriter-effect";
+import TypingComponent from './TypingComponent';
+import { useState } from 'react';
 
-const ChatsContainer = ({ chat, chatsArr, handleIsRenderChange }) => {
+const ChatsContainer = ({ chat, handleIsRenderChange, typingEnabled }) => {
+  const [text, setText] = useState('');
+
 
   function getCurrentTime(currentTime) {
     let hours = currentTime.getHours();
@@ -16,12 +20,12 @@ const ChatsContainer = ({ chat, chatsArr, handleIsRenderChange }) => {
     return formattedHours + ":" + formattedMinutes + " " + amPm;
   }
 
+  const handleText = (inp) => {
+    setText(prev => prev + inp)
+  }
+
   const handleRenderChange = () => {
-    const filteredChat = chatsArr.filter(element => element.id !== chat.id)
-    const updatedChat = {
-      ...chat, isRendering: false
-    }
-    handleIsRenderChange([...filteredChat, updatedChat])
+    handleIsRenderChange(chat)
   }
 
   return (
@@ -42,27 +46,27 @@ const ChatsContainer = ({ chat, chatsArr, handleIsRenderChange }) => {
         >
           <img src={images.bot_logo} alt="" className="bot_logo" />
           <div className="myInsureGPT__messages myInsureGPT__receivedMessages">
-            <p>
-              {chat.isRendering ? (
-                <Typewriter
-                  options={{
-                    delay: 5,
-                    cursor: ""
-                  }}
-                  onInit={(typewriter) => {
-                    typewriter
-                      .typeString(chat.message)
-                      .callFunction(() => {
-                        handleRenderChange()
-                      })
-                      .start()
-                  }}
-                />
-              ) : (
-                <div dangerouslySetInnerHTML={{ __html: chat.message }} />
-              )}
 
+            <p>
+              {
+                chat.isRendering ? (
+                  <TypingComponent
+                    textToType={chat.message}
+                    handleRenderChange={handleRenderChange}
+                    isRendering={chat.isRendering}
+                    typingEnabled={typingEnabled}
+                    handleText={handleText}
+                    text={text}
+                  />
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: text }} />
+                )
+              }
             </p>
+
+            {/* <div dangerouslySetInnerHTML={{ __html: chat.message }} /> */}
+
+
           </div>
         </div>
       )}
@@ -80,7 +84,9 @@ ChatsContainer.propTypes = {
     isRendering: PropTypes.bool,
   }),
   handleIsRenderChange: PropTypes.func,
-  chatsArr: PropTypes.shape([])
+  typingEnabled: PropTypes.bool,
+  chatsArr: PropTypes.array
 }
 
 export default ChatsContainer
+

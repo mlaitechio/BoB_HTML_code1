@@ -18,11 +18,16 @@ function App() {
   const [sessionId, setSessionId] = useState("")
   const [isSupportModalVisible, setIsSupportModalVisible] = useState(false);
   const [isSending, setIsSending] = useState(true);
+
+  const [typingEnabled, setTypingEnabled] = useState(true);
+
   const [chats, setChats] = useState([])
+
+  // const [message, setMessage] = useState("")
 
   const handleSupportModalOpen = () => {
     setIsSupportModalVisible(true);
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
   };
 
   const showPopUp = () => {
@@ -32,21 +37,59 @@ function App() {
   const hidePopUp = () => {
     setIsModalVisible(false);
   };
+
   const handleSupportClose = () => {
     setIsSupportModalVisible(false);
     setIsModalVisible(true);
   };
 
+  // const getApiResponse = async (value) => {
+  //   try {
+
+  //     const url = "/chat/"
+
+  //     const header = {
+  //       "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE0ODg1NzcyLCJpYXQiOjE3MTQ0NTM3NzIsImp0aSI6ImQ2NzkwODVhZjQ2YzQzNzNhZGYwMmM2ZTM5YTFkYjc0IiwidXNlcl9pZCI6MX0.rKvwRS3NvaI-dgUcSi3b-vWVSoC6-c5walKzGlKUnXA',
+  //       'Content-Type': 'application/json'
+  //     }
+
+  //     const reqBody = JSON.stringify({
+  //       "question": value
+  //     });
+
+  //     fetch(url, { method: "POST", headers: header, body: reqBody }).then(res => {
+  //       const reader = response.body.getReader();
+  //       return new ReadableStream({
+  //         start(controller) {
+  //           function push() {
+  //             reader.read().then(({ done, value }) => {
+  //               if (done) {
+  //                 controller.close()
+  //                 return
+  //               }
+  //               const text = new TextDecoder.decode(value);
+  //               console.log(text);
+  //             })
+  //           }
+  //         }
+  //       })
+  //     })
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
   const getApiResponse = async (value) => {
     try {
+
       let reqPackage = JSON.stringify({
         "question": value
       });
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://febc-122-170-103-221.ngrok-free.app/chat/',
-        // url: '/chat/',
+        url: '/chat/',
         headers: {
           "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE0ODg1NzcyLCJpYXQiOjE3MTQ0NTM3NzIsImp0aSI6ImQ2NzkwODVhZjQ2YzQzNzNhZGYwMmM2ZTM5YTFkYjc0IiwidXNlcl9pZCI6MX0.rKvwRS3NvaI-dgUcSi3b-vWVSoC6-c5walKzGlKUnXA',
           'Content-Type': 'application/json'
@@ -57,7 +100,11 @@ function App() {
       const { data } = await axios.request(config)
 
       const ans = data.response[1][1][0][3][1][0][1]
+
       const formattedData = formatResponse(ans)
+
+      setTypingEnabled(true)
+      setIsSending(false)
 
       const newMsg = {
         id: uuidv4(),
@@ -71,14 +118,21 @@ function App() {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsSending(true);
       setMsgLoadingVisible(false)
     }
   }
 
-  const handleIsRenderChange = (chatsArr) => {
-    setChats(chatsArr)
+  const handleIsRenderChange = (ele) => {
+    const filteredChat = chats.filter(element => element.id !== ele.id)
+    console.log({ filteredChat });
+    const updatedChat = {
+      ...ele, isRendering: false
+    }
+    setChats([...filteredChat, updatedChat])
+    setIsSending(true)
   }
+
+  console.log({ chats });
 
   const sendMessage = async (value) => {
     if (promptValue.length) {
@@ -94,15 +148,27 @@ function App() {
     }
     setChats(prev => [...prev, newInputMsg])
     setPromptValue("");
-    setIsSending(false);
     setMsgLoadingVisible(true)
     setIsStartModalVisible(false);
+    setIsSending(false)
     await getApiResponse(value)
   };
 
   const handleStartModal = () => {
     setIsStartModalVisible((prevState) => !prevState);
   };
+
+  const handleStopResponse = () => {
+    const ele = chats.at(-1)
+    const filteredChat = chats.filter(element => element.id !== ele.id)
+    console.log({ filteredChat });
+    const updatedChat = {
+      ...ele, isRendering: false
+    }
+    setChats([...filteredChat, updatedChat])
+    setTypingEnabled(false)
+    setIsSending(true)
+  }
 
   useEffect(() => {
     setSessionId(uuidv4())
@@ -130,29 +196,33 @@ function App() {
 
         {isStartModalVisible ?
           <StartingPage handleClick={sendMessage} />
-          : (
-            <div
-              className="myInsureGPT__chat"
-              id="myInsureGPT__chat"
-              style={{ display: "flex" }}
-            >
-              {chats.map(chat => (
-                <ChatsContainer key={chat.id} chat={chat} chats={chats} handleIsRenderChange={handleIsRenderChange} />
-              ))}
-              {msgLoadingVisible && (
-                <LoadingMsg />
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-          )}
+          : <div className="myInsureGPT__chat">
+            {chats.map(chat => (
+              <ChatsContainer
+                key={chat.id}
+                chat={chat}
+                handleIsRenderChange={handleIsRenderChange}
+                typingEnabled={typingEnabled}
+              />
+            ))}
+            {msgLoadingVisible && (
+              <LoadingMsg />
+            )}
+            <div ref={messagesEndRef} />
+          </div>}
 
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          sendMessage()
-        }} >
+
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            sendMessage()
+          }}
+          onReset={handleStopResponse}
+        >
           <div className="myInsureGPT__footer" id="myInsureGPT__footer">
             <div className="myInsureGPT__inputContainer">
-              {chats.length > 1 ? (
+              {(chats.length > 1 && isSending) ? (
                 <button
                   className="options_button"
                   id="options_button"
@@ -172,14 +242,14 @@ function App() {
                 type="text"
                 value={promptValue}
                 onChange={(e) => setPromptValue(e.target.value)}
+                disabled={!isSending}
               />
             </div>
             {isSending ? (
               <button
                 className="myInsureGPT__newMessageSendButton"
                 title="Send"
-                id="sendButton"
-                type="submit"
+                type="button"
               >
                 <img src={images.send} alt="" className="myInsureGPT__sendIcon" />
 
@@ -187,9 +257,8 @@ function App() {
             ) : (
               <button
                 className="stopButton_container myInsureGPT__newMessageSendButton"
-                id="stopButton"
                 title="Stop"
-                type="button"
+                type="reset"
               >
                 <i className="fa-solid fa-pause"></i>
               </button>

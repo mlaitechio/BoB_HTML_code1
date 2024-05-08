@@ -635,7 +635,7 @@ header .controls > *:nth-child(3) {
   gap: 10px;
   display: -ms-flexbox;
   overflow-y: auto;
-  display: none;
+  display: flex;
   -ms-flex-direction: column !important;
   flex-direction: column !important;
   background-color: #efefef7b;
