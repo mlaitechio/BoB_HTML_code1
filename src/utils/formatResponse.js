@@ -62,7 +62,7 @@ const getDomainWithUrl = (str) => {
 
 const convertPipeTableToHTML = (pipeTableStr) => {
   const tableRows = pipeTableStr.split("\n").filter((row) => row.trim() !== "");
-  console.log(tableRows);
+  // console.log(tableRows);
   let p = "<p>";
   let htmlTable = "<table>";
   for (let i = 0; i < tableRows.length; i++) {
@@ -102,6 +102,8 @@ const convertPipeTableToHTML = (pipeTableStr) => {
 export function formatResponse(val) {
   const boldRegex = /\*\*(.*?)\*\*/g;
   let content = val;
+  // content = content.replace(/(\r\n|\n|\r)/gm, "\n");
+  content = content.replace(/(\n{2,})/g, "\n");
   const boldMatches = content.match(boldRegex);
 
   if (boldMatches) {
@@ -115,7 +117,7 @@ export function formatResponse(val) {
 
   const matches = getWebsiteLinks(content);
 
-  console.log({ matches });
+  // console.log({ matches });
 
   if (matches) {
     matches.forEach((match) => {
@@ -140,7 +142,7 @@ export function formatResponse(val) {
 
   const unmatchedUrls = content.match(urlPattern);
 
-  console.log({ unmatchedUrls });
+  // console.log({ unmatchedUrls });
 
   if (unmatchedUrls) {
     for (const link of unmatchedUrls) {
@@ -160,6 +162,8 @@ export function formatResponse(val) {
     const htmlTable = convertPipeTableToHTML(content);
     content = htmlTable;
   }
+
+  // content.replace("/n/n", "/n");
 
   return content;
 }

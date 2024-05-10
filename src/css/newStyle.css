@@ -574,7 +574,7 @@ header .controls > *:nth-child(3) {
 }
 
 .loading {
-  display: flex;
+  display: inline-flex;
   justify-content: space-evenly;
   height: 20px;
   width: 60px;
@@ -582,11 +582,19 @@ header .controls > *:nth-child(3) {
   padding-bottom: 35px !important;
   margin-left: 10px;
   padding: 0.5rem 1rem;
-  background: #feffff;
+  background: #d2d3d3;
+}
+
+.render {
+  color: #5c5c5c;
+}
+
+.myInsureGPT__messages {
+  position: relative;
   border: 1px solid #cdcece6e;
   border-radius: 1rem 1rem 1rem 0;
-  /* margin: 18px; */
-  box-shadow: 5px 5px 25px rgb(171 168 163 / 27%);
+  box-shadow: 5px 5px 25px rgba(49, 48, 46, 0.27);
+  font-size: 12px;
 }
 
 .ball {
@@ -619,7 +627,8 @@ header .controls > *:nth-child(3) {
 
 .genAI_msg {
   text-align: center;
-  font-size: 12px;
+  /* font-size: 12px; */
+  font-size: 11px;
   color: gray;
   font-weight: 500;
   padding-bottom: 1rem;
@@ -748,14 +757,17 @@ header .controls > *:nth-child(3) {
 }
 
 .myInsureGPT__chat .myInsureGPT__receivedMessages {
-  background: #feffff;
+  background: #e9e9e9;
+  /* background: #feffff; */
   border: 1px solid #cdcece6e;
   border-radius: 1rem 1rem 1rem 0;
   min-width: 300px;
   max-width: 90%;
   margin-left: 10px;
   padding: 0.5rem 1rem;
-  box-shadow: 5px 5px 25px rgb(171 168 163 / 27%);
+  /* box-shadow: 5px 5px 25px rgb(171 168 163 / 27%); */
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .myInsureGPT__sentMessages_container {
@@ -779,7 +791,9 @@ header .controls > *:nth-child(3) {
   border-radius: 10px 10px 0 10px;
   padding: 0.5rem 1rem;
   color: #fff;
-  box-shadow: 5px 5px 25px rgb(171 168 163 / 27%);
+  /* box-shadow: 5px 5px 25px rgb(171 168 163 / 27%); */
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .myInsureGPT__chat .bot_logo {
@@ -789,7 +803,9 @@ header .controls > *:nth-child(3) {
   border-radius: 50%;
   background-color: #ffffff;
   border: 1px solid #3232322e;
-  box-shadow: 5px 5px 25px rgb(171 168 163 / 27%);
+  /* box-shadow: 5px 5px 25px rgb(171 168 163 / 27%); */
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .myInsureGPT__chat .myInsureGPT__receivedMessages p {
@@ -1051,13 +1067,26 @@ header .controls > *:nth-child(3) {
 }
 
 .start_screen .start_options .start_opt {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+  background-color: #ebebeb;
+  /* background-color: #FFECE1; */
+  /* background-color: #ffece17c; */
   border-radius: 5px;
-  box-shadow: rgba(135, 135, 135, 0.35) 0px 5px 15px;
+  /* box-shadow: rgba(135, 135, 135, 0.35) 0px 5px 15px; */
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
   padding: 1rem 1.5rem;
   text-align: center;
   cursor: pointer;
   border: none;
+  position: relative;
+}
+
+.start_screen .start_options .start_opt .open_svg {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .start_screen .start_options .start_opt h6 {

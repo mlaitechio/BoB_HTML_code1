@@ -1,6 +1,7 @@
 
 import PropTypes from 'prop-types';
 import images from '../images';
+import OpenWindow from './svg/OpenWindow';
 
 const StartingPage = ({ handleClick }) => {
   return (
@@ -40,6 +41,9 @@ const StartingPage = ({ handleClick }) => {
                 target="_blank"
                 className="start_opt"
               >
+                <div className="open_svg" >
+                  <OpenWindow />
+                </div>
                 <button className="new_page_button">
                   <strong>Promotions & Offers</strong>
                   <p>Latest Offers will be visible here</p>
@@ -50,6 +54,9 @@ const StartingPage = ({ handleClick }) => {
                 target="_blank"
                 className="start_opt"
               >
+                <div className="open_svg" >
+                  <OpenWindow />
+                </div>
                 <button className="new_page_button">
                   <strong>Interest Rate & Service Charges</strong>
                   <p>Know the latest Interest Rate & Service Charges</p>
