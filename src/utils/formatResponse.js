@@ -1,41 +1,73 @@
+// function getWebsiteLinks(text) {
+//   const results = [];
+//   let startIndex = 0;
+//   let extraBraces = 0;
+//   let extraSq = false;
+//   let startBlob = [];
+//   let endBlob = [];
+
+//   while (startIndex < text.length) {
+//     if (text[startIndex] === "[") {
+//       startBlob.push(startIndex);
+//       extraSq = true;
+//     }
+//     if (text[startIndex] === "]") {
+//       extraSq = false;
+//     }
+
+//     if (!extraSq) {
+//       if (text[startIndex] === "(") {
+//         extraBraces += 1;
+//       }
+
+//       if (text[startIndex] === ")") {
+//         extraBraces -= 1;
+//         if (!extraBraces) {
+//           endBlob.push(startIndex + 1);
+//         }
+//       }
+//     }
+
+//     startIndex = startIndex + 1;
+//   }
+
+//   startBlob.forEach((element, index) => {
+//     if (endBlob[index]) results.push(text.slice(element, endBlob[index]));
+//   });
+
+//   return results;
+// }
+
 function getWebsiteLinks(text) {
-  const results = [];
-  let startIndex = 0;
-  let extraBraces = 0;
-  let extraSq = false;
-  let startBlob = [];
-  let endBlob = [];
+  const links = [];
+  let bracketCount = 0;
+  let linkStart = -1;
 
-  while (startIndex < text.length) {
-    if (text[startIndex] === "[") {
-      startBlob.push(startIndex);
-      extraSq = true;
-    }
-    if (text[startIndex] === "]") {
-      extraSq = false;
-    }
-
-    if (!extraSq) {
-      if (text[startIndex] === "(") {
-        extraBraces += 1;
-      }
-
-      if (text[startIndex] === ")") {
-        extraBraces -= 1;
-        if (!extraBraces) {
-          endBlob.push(startIndex + 1);
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === '[' && bracketCount === 0) {
+      linkStart = i + 1;
+      bracketCount++;
+    } else if (text[i] === ']' && bracketCount === 1) {
+      const linkText = text.slice(linkStart, i);
+      bracketCount++;
+      if (text[i + 1] === '(') {
+        const linkEndIndex = text.indexOf(')', i);
+        if (linkEndIndex !== -1) {
+          const link = text.slice(i + 2, linkEndIndex);
+          links.push(`[${linkText}](${link})`);
+          // links.push({ text: linkText, url: link });
+          i = linkEndIndex;
+          bracketCount = 0;
         }
       }
+    } else if (text[i] === '[') {
+      bracketCount++;
+    } else if (text[i] === ']') {
+      bracketCount--;
     }
-
-    startIndex = startIndex + 1;
   }
 
-  startBlob.forEach((element, index) => {
-    if (endBlob[index]) results.push(text.slice(element, endBlob[index]));
-  });
-
-  return results;
+  return links;
 }
 
 const getDomainWithUrl = (str) => {
