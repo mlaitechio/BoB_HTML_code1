@@ -49,7 +49,8 @@ function App() {
       // console.log("Open api called");
       isRender.current = true
 
-      // const url = "https://1aa5-2409-40c1-5c-e132-c20-f915-3dc7-33cf.ngrok-free.app/api/prompt"
+      // const url = "https://7cad-2409-40c1-4f-4d83-98bb-e0ac-6662-c89a.ngrok-free.app/api/prompt"
+      // const url = "http://127.0.0.1:4445/api/prompt"
       const url = "/api/prompt"
 
       // const header = {
@@ -275,12 +276,9 @@ function App() {
                 <div className="myInsureGPT__messages myInsureGPT__receivedMessages render ">
                   <p>
                     <div dangerouslySetInnerHTML={{
-                      __html: message + ` <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>`
+                      __html: message + ` <svg xmlns="http://www.w3.org/2000/svg" width="32" height="20" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>`
                     }} />
                   </p>
-                  {/* <div style={{ position: "absolute", top: "5px", right: "5px" }} >
-                    <Streaming />
-                  </div> */}
                 </div>
               </div>
             ) : (
