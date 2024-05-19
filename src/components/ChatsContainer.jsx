@@ -64,8 +64,7 @@ const ChatsContainer = ({ chat, handleIsRenderChange, typingEnabled }) => {
               }
             </p> */}
 
-            <p>
-              <div dangerouslySetInnerHTML={{ __html: chat.message }} />
+            <p dangerouslySetInnerHTML={{ __html: chat.message }}>
             </p>
 
 
